@@ -9,38 +9,70 @@ use stdClass;
  */
 class CompletePurchaseRequest extends PurchaseRequest {
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function getPrivateKey()
     {
         return $this->getParameter('privateKey');
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function setPrivateKey($value)
     {
         return $this->setParameter('privateKey', $value);
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function getIpnData()
     {
         return $this->getParameter('ipn_data');
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function setData($value)
     {
         return $this->setParameter('ipn_data', $value);
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function getIpnEnvKey()
     {
         return $this->getParameter('ipn_env_key');
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     */
     public function setEnvKey($value)
     {
         return $this->setParameter('ipn_env_key', $value);
     }
 
+    /**
+     * @var stdClass
+     */
     private $responseError;
 
+    /**
+     * Process IPN request data
+     *
+     * @return array
+     */
     public function getData()
     {
         if ( ! $this->getPrivateKey())
@@ -48,6 +80,7 @@ class CompletePurchaseRequest extends PurchaseRequest {
             throw new MissingKeyException("Missing private key path parameter");
         }
 
+        $data = [];
         $this->responseError = new stdClass();
 
         $this->responseError->code    = 0;
@@ -58,15 +91,23 @@ class CompletePurchaseRequest extends PurchaseRequest {
         {
             try
             {
-                $data = AbstractRequest::factoryFromEncrypted($this->getIpnEnvKey(), $this->getIpnData(), $this->getPrivateKey());
+                $data = AbstractRequest::factoryFromEncrypted(
+                    $this->getIpnEnvKey(),
+                    $this->getIpnData(),
+                    $this->getPrivateKey()
+                );
                 $data = json_decode(json_encode($data), true);
 
+                // extract the transaction status from the IPN message
                 if (isset($data['objPmNotify']['action']))
                 {
                     $this->action = $data['objPmNotify']['action'];
                 }
 
-                if ( ! in_array($this->action, ['confirmed_pending', 'paid_pending', 'paid', 'confirmed', 'canceled', 'credit']))
+                if ( ! in_array(
+                    $this->action,
+                    ['confirmed_pending', 'paid_pending', 'paid', 'confirmed', 'canceled', 'credit']
+                ))
                 {
                     $this->responseError->type    = AbstractRequest::CONFIRM_ERROR_TYPE_PERMANENT;
                     $this->responseError->code    = AbstractRequest::ERROR_CONFIRM_INVALID_ACTION;
@@ -90,6 +131,12 @@ class CompletePurchaseRequest extends PurchaseRequest {
         return $data;
     }
 
+    /**
+     * Build IPN response message
+     *
+     * @param array $data
+     * @return \Omnipay\Common\Message\ResponseInterface|Response
+     */
     public function sendData($data)
     {
         return $this->response = new CompletePurchaseResponse($this, $data, $this->responseError);

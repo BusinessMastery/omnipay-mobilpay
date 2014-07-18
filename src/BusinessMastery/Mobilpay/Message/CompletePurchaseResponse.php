@@ -4,14 +4,31 @@ use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 
 /**
- * MobilPay Complete Purchase PDT Response
+ * MobilPay Complete Purchase Response
  */
-class CompletePurchaseResponse extends AbstractResponse
-{
+class CompletePurchaseResponse extends AbstractResponse {
+
+    /**
+     * @var string
+     */
     protected $status;
+
+    /**
+     * @var stdClass
+     */
     protected $responseError;
+
+    /**
+     * @var string
+     */
     protected $action;
 
+    /**
+     * @param Omnipay\Common\Message\RequestInterface $request
+     * @param array $data
+     * @param stdClass $responseError
+     * @return void
+     */
     public function __construct(RequestInterface $request, $data, $responseError)
     {
         parent::__construct($request, $data);
@@ -25,26 +42,47 @@ class CompletePurchaseResponse extends AbstractResponse
         }
     }
 
+    /**
+     * Returns whether the transaction was successful
+     *
+     * @return boolean
+     */
     public function isSuccessful()
     {
         return in_array($this->action, ['confirmed']);
     }
 
+    /**
+     * Returns whether the transaction is pending
+     *
+     * @return boolean
+     */
     public function isPending()
     {
         return in_array($this->action, ['confirmed_pending', 'paid_pending', 'paid']);
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->action;
     }
 
+    /**
+     * @return array
+     */
     public function getData()
     {
         return $this->data;
     }
 
+    /**
+     * Send IPN response
+     *
+     * @return void
+     */
     public function sendResponse()
     {
         header('Content-type: application/xml');
