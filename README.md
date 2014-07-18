@@ -3,7 +3,7 @@
 **MobilPay driver for the Omnipay PHP payment processing library**
 
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements [MOBILPAY](http://www.mobilpay.ro) support for Omnipay.
+processing library for PHP 5.4+. This package implements [MOBILPAY](http://www.mobilpay.ro) support for Omnipay.
 
 ## Installation
 
@@ -28,6 +28,74 @@ And run composer to update your dependencies:
 The following gateways are provided by this package:
 
 * MobilPay
+
+**Initiating payment request**
+
+```php
+$gateway = Omnipay::create('MobilPay');
+$gateway->setMerchantId('1234-5678-9012-3456-7890');
+$gateway->publicKeyPath('/path/to/public.cer');
+
+$response = $gateway->purchase([
+    'amount'     => '10.00',
+    'currency'   => 'RON',
+    'orderId'    => 1,
+    'confirmUrl' => 'http://example.com/ipn',
+    'returnUrl'  => 'http://www.google.com',
+    'details'    => 'Test payment',
+    'testMode'   => true,
+    'params'     => [
+        'selected_package' => 1
+    ]
+])->send();
+
+$response->redirect();
+```
+
+**Processing IPN requests**
+
+```php
+$gateway = Omnipay::create('MobilPay');
+$gateway->privateKeyPath('/path/to/private.key');
+
+$response = $gateway->completePurchase($_POST)->send();
+$response->sendResponse();
+
+switch($response->getMessage())
+{
+    case 'confirmed_pending': // transaction is pending review. After this is done, a new IPN request will be sent with either confirmation or cancellation
+
+        //update DB, SET status = "pending"
+
+        break;
+    case 'paid_pending': // transaction is pending review. After this is done, a new IPN request will be sent with either confirmation or cancellation
+
+        //update DB, SET status = "pending"
+
+        break;
+    case 'paid': // transaction is pending authorization. After this is done, a new IPN request will be sent with either confirmation or cancellation
+
+        //update DB, SET status = "open/preauthorized"
+
+        break;
+    case 'confirmed': // transaction is finalized, the money have been captured from the customer's account
+
+        //update DB, SET status = "confirmed/captured"
+
+        break;
+    case 'canceled': // transaction is canceled
+
+        //update DB, SET status = "canceled"
+
+        break;
+    case 'credit': // transaction has been refunded
+
+        //update DB, SET status = "refunded"
+
+        break;
+}
+
+```
 
 For general usage instructions, please see the main [Omnipay](https://github.com/omnipay/omnipay)
 repository.
