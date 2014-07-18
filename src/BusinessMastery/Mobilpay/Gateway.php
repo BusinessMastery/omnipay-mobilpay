@@ -24,11 +24,11 @@ class Gateway extends AbstractGateway {
      */
     public function getDefaultParameters()
     {
-        return array(
+        return [
             'merchantId' => null,
             'publicKey'  => null,
             'testMode'   => false
-        );
+        ];
     }
 
     /**
@@ -70,7 +70,7 @@ class Gateway extends AbstractGateway {
      * @param array $parameters
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\MobilPay\Message\PurchaseRequest', $parameters);
     }
@@ -79,7 +79,7 @@ class Gateway extends AbstractGateway {
      * @param array $parameters
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
-    public function completePurchase(array $parameters = array())
+    public function completePurchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\MobilPay\Message\CompletePurchaseRequest', $parameters);
     }

@@ -99,7 +99,7 @@ class Notify {
     {
 
         $parameters = explode('&', $queryString);
-        $reqParams = array();
+        $reqParams = [];
         foreach ($parameters as $item)
         {
             list ($key, $value) = explode('=', $item);

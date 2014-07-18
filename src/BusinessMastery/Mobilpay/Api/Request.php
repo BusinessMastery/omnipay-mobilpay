@@ -91,7 +91,7 @@
 	 *
 	 * @var array
 	 */
-	public $m_params		= array();
+	public $m_params		= [];
 
 	function Mobilpay_Payment_Request()
 	{
@@ -152,7 +152,7 @@
 
 	static function buildQueryString($params)
 	{
-		$crc_pairs = array();
+		$crc_pairs = [];
 		foreach ($params as $key=>$value)
 			$crc_pairs[] = "{$key}={$value}";
 
@@ -175,8 +175,8 @@
 			return false;
 		$src_data = Mobilpay_Payment_Request::buildQueryString($params);
 		$enc_data = '';
-		$env_keys = array();
-		$result = openssl_seal($src_data, $enc_data, $env_keys, array($public_key));
+		$env_keys = [];
+		$result = openssl_seal($src_data, $enc_data, $env_keys, [$public_key]);
 		if($result === false)
 		{
 			$env_key	= null;

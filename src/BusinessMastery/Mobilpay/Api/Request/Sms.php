@@ -54,7 +54,7 @@ class Sms extends AbstractRequest {
 	protected function _loadFromQueryString($queryString)
 	{
 		$parameters = explode('&', $queryString);
-		$reqParams 	= array();
+		$reqParams 	= [];
         foreach ($parameters as $item)
         {
         	list ($key, $value) = explode('=', $item);

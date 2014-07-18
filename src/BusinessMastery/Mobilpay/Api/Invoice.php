@@ -28,8 +28,8 @@ class Invoice {
 	protected $billingAddress	= null;
 	protected $shippingAddress	= null;
 
-	protected $items			= array();
-	protected $exchangeRates	= array();
+	protected $items			= [];
+	protected $exchangeRates	= [];
 
 	public function __construct(DOMNode $elem = null)
 	{

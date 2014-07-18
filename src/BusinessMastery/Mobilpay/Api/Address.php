@@ -26,7 +26,7 @@ class Address {
     public $email = null;
     public $mobilePhone = null;
 
-    public function __construct (DOMNode $elem = null)
+    public function __construct(DOMNode $elem = null)
     {
 
         if ($elem != null)
@@ -35,7 +35,7 @@ class Address {
         }
     }
 
-    protected function loadFromXml (DOMNode $elem)
+    protected function loadFromXml(DOMNode $elem)
     {
 
         $attr = $elem->attributes->getNamedItem('type');
@@ -73,7 +73,7 @@ class Address {
         }
     }
 
-    public function createXmlElement (DOMDocument $xmlDoc, $nodeName)
+    public function createXmlElement(DOMDocument $xmlDoc, $nodeName)
     {
 
         if (! ($xmlDoc instanceof DOMDocument))
@@ -133,14 +133,14 @@ class Address {
         return $addrElem;
     }
 
-    public function toArray ()
+    public function toArray()
     {
-
-        return array(
-            'ppiFirstName' => $this->firstName ,
-            'ppiLastName' => $this->lastName ,
-            'ppiAddress' => $this->address ,
-            'ppiEmail' => $this->email ,
-            'ppiPhone' => $this->mobilePhone);
+        return [
+            'ppiFirstName' => $this->firstName,
+            'ppiLastName' => $this->lastName,
+            'ppiAddress' => $this->address,
+            'ppiEmail' => $this->email,
+            'ppiPhone' => $this->mobilePhone
+        ];
     }
 }

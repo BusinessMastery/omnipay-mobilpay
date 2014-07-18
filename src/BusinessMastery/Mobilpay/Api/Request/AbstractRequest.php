@@ -91,7 +91,7 @@ abstract class AbstractRequest {
 	 */
 	public $confirmUrl 	= null;
 
-	public $params		= array();
+	public $params		= [];
 
 	/**
 	 * outEnvKey - output envelope key
@@ -269,7 +269,7 @@ abstract class AbstractRequest {
 			}
 		}
 
-		$this->params = array();
+		$this->params = [];
 		$paramElems = $elem->getElementsByTagName('params');
 		if($paramElems->length == 1)
 		{
@@ -321,7 +321,7 @@ abstract class AbstractRequest {
 		}
 
 		$srcData = $this->_xmlDoc->saveXML();
-		$publicKeys	= array($publicKey);
+		$publicKeys	= [$publicKey];
 		$encData 	= null;
 		$envKeys 	= null;
 
@@ -382,6 +382,6 @@ abstract class AbstractRequest {
     }
     public function __sleep()
     {
-        return array('_requestIdentifier','orderId','signature', 'returnUrl', 'confirmUrl', 'params');
+        return ['_requestIdentifier','orderId','signature', 'returnUrl', 'confirmUrl', 'params'];
     }
 }
