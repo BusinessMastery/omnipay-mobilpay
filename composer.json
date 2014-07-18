@@ -1,0 +1,34 @@
+{
+    "name": "business-mastery/omnipay-mobilpay",
+    "description": "MobilPay driver for the Omnipay PHP payment processing library",
+    "keywords": [
+        "mobilpay",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase"
+    ],
+    "homepage": "https://github.com/BusienssMastery/omnipay-mobilpay",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tudor Galanopulos",
+            "email": "tudor@tudorg.ro"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\MobilPay\\": "src/BusinessMastery/Mobilpay"
+        }
+    },
+    "minimum-stability": "stable"
+}
