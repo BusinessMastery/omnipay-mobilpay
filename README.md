@@ -34,7 +34,7 @@ The following gateways are provided by this package:
 ```php
 $gateway = Omnipay::create('MobilPay');
 $gateway->setMerchantId('1234-5678-9012-3456-7890');
-$gateway->publicKeyPath('/path/to/public.cer');
+$gateway->setPublicKey('/path/to/public.cer');
 
 $response = $gateway->purchase([
     'amount'     => '10.00',

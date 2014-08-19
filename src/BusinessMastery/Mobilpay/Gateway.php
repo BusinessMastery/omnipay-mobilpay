@@ -52,7 +52,7 @@ class Gateway extends AbstractGateway {
      * @param string $value
      * @return mixed
      */
-    public function publicKeyPath($value)
+    public function setPublicKey($value)
     {
         return $this->setParameter('publicKey', $value);
     }
@@ -61,9 +61,36 @@ class Gateway extends AbstractGateway {
      * @param string $value
      * @return mixed
      */
-    public function privateKeyPath($value)
+    public function setPrivateKey($value)
     {
         return $this->setParameter('privateKey', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setCurrency($value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setReturnUrl($value)
+    {
+        return $this->setParameter('returnUrl', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setConfirmUrl($value)
+    {
+        return $this->setParameter('confirmUrl', $value);
     }
 
     /**
