@@ -6,6 +6,7 @@ use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\MobilPay\Exception\MissingKeyException;
 use Omnipay\MobilPay\Api\Request\Card;
 use Omnipay\MobilPay\Api\Invoice;
+use Omnipay\MobilPay\Api\Recurrence;
 
 /**
  * MobilPay Purchase Request
@@ -142,6 +143,60 @@ class PurchaseRequest extends AbstractRequest {
     }
 
     /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getRecurrence()
+    {
+        return $this->getParameter('recurrence');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setRecurrence($value)
+    {
+        return $this->setParameter('recurrence', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getPaymentNo()
+    {
+        return $this->getParameter('paymentNo');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setPaymentNo($value)
+    {
+        return $this->setParameter('paymentNo', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getIntervalDay()
+    {
+        return $this->getParameter('intervalDay');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setIntervalDay($value)
+    {
+        return $this->setParameter('intervalDay', $value);
+    }
+
+    /**
      * Build encrypted request data
      *
      * @return array
@@ -164,6 +219,13 @@ class PurchaseRequest extends AbstractRequest {
         $request->confirmUrl = $this->getParameter('confirmUrl');
         $request->returnUrl  = $this->getParameter('returnUrl');
         $request->params     = $this->getParameter('params') ?: [];
+
+        if ($this->getParameter('recurrence'))
+        {
+            $request->recurrence = new Recurrence();
+            $request->recurrence->payments_no = $this->getParameter('paymentNo');;
+            $request->recurrence->interval_day = $this->getParameter('intervalDay');;
+        }
 
         $request->invoice = new Invoice();
         $request->invoice->currency = $this->getParameter('currency');

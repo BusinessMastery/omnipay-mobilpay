@@ -27,7 +27,8 @@ class Gateway extends AbstractGateway {
         return [
             'merchantId' => null,
             'publicKey'  => null,
-            'testMode'   => false
+            'testMode'   => false,
+            'recurrence' => false
         ];
     }
 
@@ -91,6 +92,60 @@ class Gateway extends AbstractGateway {
     public function setConfirmUrl($value)
     {
         return $this->setParameter('confirmUrl', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getRecurrence()
+    {
+        return $this->getParameter('recurrence');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setRecurrence($value)
+    {
+        return $this->setParameter('recurrence', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getPaymentNo()
+    {
+        return $this->getParameter('paymentNo');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setPaymentNo($value)
+    {
+        return $this->setParameter('paymentNo', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getIntervalDay()
+    {
+        return $this->getParameter('intervalDay');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setIntervalDay($value)
+    {
+        return $this->setParameter('intervalDay', $value);
     }
 
     /**
