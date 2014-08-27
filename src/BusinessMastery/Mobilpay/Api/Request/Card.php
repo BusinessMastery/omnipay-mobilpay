@@ -11,12 +11,14 @@
 
 use Exception, DOMDocument, DOMElement, DOMNode;
 use Omnipay\MobilPay\Api\Invoice;
+use Omnipay\MobilPay\Api\Recurrence;
 
 class Card extends AbstractRequest {
 
 	const ERROR_LOAD_FROM_XML_ORDER_INVOICE_ELEM_MISSING	= 0x30000001;
 
 	public $invoice	= null;
+	public $recurrence = null;
 
 	function __construct()
 	{
@@ -36,6 +38,13 @@ class Card extends AbstractRequest {
 		}
 
 		$this->invoice = new Invoice($elems->item(0));
+
+		$elems = $elem->getElementsByTagName('recurrence');
+
+		if($elems->length > 0)
+		{
+		    $this->recurrence = new Recurrence($elems->item(0));
+		}
 
 		return $this;
 	}
@@ -71,6 +80,12 @@ class Card extends AbstractRequest {
 
 		$xmlElem			= $this->invoice->createXmlElement($this->_xmlDoc);
 		$rootElem->appendChild($xmlElem);
+
+		if ($this->recurrence instanceof Recurrence)
+		{
+    		$xmlElem			= $this->recurrence->createXmlElement($this->_xmlDoc);
+    		$rootElem->appendChild($xmlElem);
+		}
 
 		if(is_array($this->params) && sizeof($this->params) > 0)
 		{
