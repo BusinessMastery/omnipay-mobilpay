@@ -1,7 +1,7 @@
 <?php namespace Omnipay\MobilPay\Api;
 
 /**
- * Class Mobilpay_Payment_Invoice
+ * Class Invoice
  * @copyright NETOPIA System
  * @author Claudiu Tudose
  * @version 1.0
@@ -44,7 +44,7 @@ class Invoice {
 		$attr = $elem->attributes->getNamedItem('currency');
 		if($attr == null)
 		{
-			throw new Exception('Mobilpay_Payment_Invoice::loadFromXml failed; currency attribute missing', self::ERROR_LOAD_FROM_XML_CURRENCY_ATTR_MISSING);
+			throw new Exception('Invoice::loadFromXml failed; currency attribute missing', self::ERROR_LOAD_FROM_XML_CURRENCY_ATTR_MISSING);
 		}
 		$this->currency = $attr->nodeValue;
 
@@ -138,10 +138,10 @@ class Invoice {
 			$xmlInvElem->appendChild($xmlElem);
 		}
 
-		if(($this->billingAddress instanceof Mobilpay_Payment_Address) || ($this->shippingAddress instanceof Mobilpay_Payment_Address))
+		if(($this->billingAddress instanceof Address) || ($this->shippingAddress instanceof Address))
 		{
 			$xmlAddr = null;
-			if($this->billingAddress instanceof Mobilpay_Payment_Address)
+			if($this->billingAddress instanceof Address)
 			{
 				try
 				{
@@ -157,7 +157,7 @@ class Invoice {
 					$e = $e;
 				}
 			}
-			if($this->shippingAddress instanceof Mobilpay_Payment_Address)
+			if($this->shippingAddress instanceof Address)
 			{
 				try
 				{
@@ -182,14 +182,14 @@ class Invoice {
 		return $xmlInvElem;
 	}
 
-	public function setBillingAddress(Mobilpay_Payment_Address $address)
+	public function setBillingAddress(Address $address)
 	{
 		$this->billingAddress = $address;
 
 		return $this;
 	}
 
-	public function setShippingAddress(Mobilpay_Payment_Address $address)
+	public function setShippingAddress(Address $address)
 	{
 		$this->shippingAddress = $address;
 

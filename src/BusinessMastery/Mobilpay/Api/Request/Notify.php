@@ -24,7 +24,9 @@ class Notify {
     public $timestamp 				= null;
     public $originalAmount 			= null;
     public $processedAmount 		= null;
-    public $customer 				= null;
+    public $current_payment_count   = 1;
+    public $customer                = null;
+    public $issuer                  = null;
 
     private $_crc = null;
 
@@ -62,6 +64,12 @@ class Notify {
             $this->customer = new Address($elems->item(0));
         }
 
+        $elems = $elem->getElementsByTagName('issuer');
+        if ($elems->length == 1)
+        {
+            $this->issuer = $elems->item(0)->nodeValue;
+        }
+
         $elems = $elem->getElementsByTagName('purchase');
         if ($elems->length == 1)
         {
@@ -78,6 +86,12 @@ class Notify {
         if ($elems->length == 1)
         {
             $this->processedAmount = $elems->item(0)->nodeValue;
+        }
+
+        $elems = $elem->getElementsByTagName('current_payment_count');
+        if ($elems->length == 1)
+        {
+            $this->current_payment_count = $elems->item(0)->nodeValue;
         }
 
         $elems = $elem->getElementsByTagName('error');
@@ -110,6 +124,7 @@ class Notify {
         $this->action = isset($reqParams['mobilpay_refference_action']) ? $reqParams['mobilpay_refference_action'] : null;
         $this->originalAmount = isset($reqParams['mobilpay_refference_original_amount']) ? $reqParams['mobilpay_refference_original_amount'] : null;
         $this->processedAmount = isset($reqParams['mobilpay_refference_processed_amount']) ? $reqParams['mobilpay_refference_processed_amount'] : null;
+        $this->current_payment_count = isset($reqParams['mobilpay_refference_current_payment_count']) ? $reqParams['mobilpay_refference_current_payment_count'] : null;
         $this->errorCode = isset($reqParams['mobilpay_refference_error_code']) ? $reqParams['mobilpay_refference_error_code'] : null;
         $this->errorMessage = isset($reqParams['mobilpay_refference_error_message']) ? $reqParams['mobilpay_refference_error_message'] : null;
         $this->timestamp = isset($reqParams['mobilpay_refference_timestamp']) ? $reqParams['mobilpay_refference_timestamp'] : null;
@@ -133,7 +148,7 @@ class Notify {
         $elem->nodeValue = $this->action;
         $xmlNotifyElem->appendChild($elem);
 
-        if ($this->customer instanceof Mobilpay_Payment_Address)
+        if ($this->customer instanceof Address)
         {
 
             $xmlNotifyElem->appendChild($this->customer->createXmlElement($xmlDoc, 'customer'));
@@ -154,6 +169,20 @@ class Notify {
         {
             $elem = $xmlDoc->createElement('processed_amount');
             $elem->nodeValue = $this->processedAmount;
+            $xmlNotifyElem->appendChild($elem);
+        }
+
+        if ($this->current_payment_count != null)
+        {
+            $elem = $xmlDoc->createElement('current_payment_count');
+            $elem->nodeValue = $this->current_payment_count;
+            $xmlNotifyElem->appendChild($elem);
+        }
+
+        if ($this->issuer != null)
+        {
+            $elem = $xmlDoc->createElement('issuer');
+            $elem->nodeValue = $this->issuer;
             $xmlNotifyElem->appendChild($elem);
         }
 

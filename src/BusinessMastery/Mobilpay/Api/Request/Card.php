@@ -78,6 +78,10 @@ class Card extends AbstractRequest {
 		$xmlElem->nodeValue	= $this->signature;
 		$rootElem->appendChild($xmlElem);
 
+		$xmlElem			= $this->_xmlDoc->createElement('service');
+		$xmlElem->nodeValue	= $this->service;
+		$rootElem->appendChild($xmlElem);
+
 		$xmlElem			= $this->invoice->createXmlElement($this->_xmlDoc);
 		$rootElem->appendChild($xmlElem);
 

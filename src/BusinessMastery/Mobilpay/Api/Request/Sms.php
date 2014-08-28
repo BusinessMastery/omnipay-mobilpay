@@ -86,7 +86,7 @@ class Sms extends AbstractRequest {
         }
         if(isset($reqParams['return_url']))
         {
-        	$this->confirmUrl = $reqParams['return_url'];
+        	$this->returnUrl = $reqParams['return_url'];
         }
         if(isset($reqParams['msisdn']))
         {

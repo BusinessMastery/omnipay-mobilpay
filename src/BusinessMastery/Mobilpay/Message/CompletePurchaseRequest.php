@@ -96,6 +96,9 @@ class CompletePurchaseRequest extends PurchaseRequest {
                     $this->getIpnData(),
                     $this->getPrivateKey()
                 );
+
+                $this->responseError->message = $data->objPmNotify->getCrc();
+
                 $data = json_decode(json_encode($data), true);
 
                 // extract the transaction status from the IPN message

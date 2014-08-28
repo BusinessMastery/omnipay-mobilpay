@@ -90,6 +90,7 @@ abstract class AbstractRequest {
 	 * @var string
 	 */
 	public $confirmUrl 	= null;
+	public $cancelUrl 	= null;
 
 	public $params		= [];
 
@@ -109,10 +110,12 @@ abstract class AbstractRequest {
 
 	protected $_requestIdentifier	= null;
 
-	protected $_objRequestParams= null;
-	protected $_objRequestInfo	= null;
+	protected $_objRequestParams    = null;
+	protected $_objRequestInfo	    = null;
 
-	public $objReqNotify		= null;
+	public $objReqNotify		    = null;
+	public $selectedInstallments	= null;
+	public $reqInstallments		    = null;
 
 	public function __construct()
 	{
@@ -267,6 +270,12 @@ abstract class AbstractRequest {
 			{
 				$this->confirmUrl = $elems->item(0)->nodeValue;
 			}
+			//check for overwritten cancel url
+			$elems = $xmlElem->getElementsByTagName('cancel');
+			if($elems->length == 1)
+			{
+				$this->cancelUrl = $elems->item(0)->nodeValue;
+			}
 		}
 
 		$this->params = [];
@@ -382,6 +391,11 @@ abstract class AbstractRequest {
     }
     public function __sleep()
     {
-        return ['_requestIdentifier','orderId','signature', 'returnUrl', 'confirmUrl', 'params'];
+        return ['_requestIdentifier','_objRequestInfo','invoice','orderId','signature', 'returnUrl', 'confirmUrl', 'cancelUrl','params','reqInstallments','selectedInstallments'];
+    }
+
+    public function getXml(){
+         $this->_prepare();
+         return $this->_xmlDoc;
     }
 }
