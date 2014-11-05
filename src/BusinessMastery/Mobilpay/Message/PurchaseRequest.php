@@ -242,7 +242,12 @@ class PurchaseRequest extends AbstractRequest {
         	}
         	
         	$request->invoice->setBillingAddress($billingAddress);
+        	$request->invoice->setShippingAddress($billingAddress);
         }
+        
+        if(!$request->service) {
+        	unset($request->service);
+        } 
 
         $request->encrypt($this->getParameter('publicKey'));
         
