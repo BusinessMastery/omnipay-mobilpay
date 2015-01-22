@@ -6,7 +6,9 @@ use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\MobilPay\Exception\MissingKeyException;
 use Omnipay\MobilPay\Api\Request\Card;
 use Omnipay\MobilPay\Api\Invoice;
+use Omnipay\MobilPay\Api\Address;
 use Omnipay\MobilPay\Api\Recurrence;
+use Illuminate\Support\Collection;
 
 /**
  * MobilPay Purchase Request
@@ -143,8 +145,8 @@ class PurchaseRequest extends AbstractRequest {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getRecurrence()
     {
@@ -161,8 +163,8 @@ class PurchaseRequest extends AbstractRequest {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getPaymentNo()
     {
@@ -179,8 +181,8 @@ class PurchaseRequest extends AbstractRequest {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getIntervalDay()
     {
@@ -197,9 +199,30 @@ class PurchaseRequest extends AbstractRequest {
     }
 
     /**
+     * @return mixed
+     * @internal param string $value
+     */
+    public function getBillingAddress()
+    {
+        return $this->getParameter('billingAddress');
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function setBillingAddress($value)
+    {
+        return $this->setParameter('billingAddress', $value);
+    }
+
+    /**
      * Build encrypted request data
      *
      * @return array
+     * @throws MissingKeyException
+     * @throws \Exception
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {
@@ -223,14 +246,21 @@ class PurchaseRequest extends AbstractRequest {
         if ($this->getParameter('recurrence'))
         {
             $request->recurrence = new Recurrence();
-            $request->recurrence->payments_no = $this->getParameter('paymentNo');;
-            $request->recurrence->interval_day = $this->getParameter('intervalDay');;
+            $request->recurrence->payments_no = $this->getParameter('paymentNo');
+            $request->recurrence->interval_day = $this->getParameter('intervalDay');
         }
 
         $request->invoice = new Invoice();
         $request->invoice->currency = $this->getParameter('currency');
         $request->invoice->amount   = $this->getParameter('amount');
         $request->invoice->details  = $this->getParameter('details');
+
+
+        $getBillingAddress = $this->getBillingAddress();
+        if ($getBillingAddress)
+        {
+            $request->invoice->setBillingAddress( $this->makeBillingAddress($getBillingAddress) );
+        }
 
         $request->encrypt($this->getParameter('publicKey'));
 
@@ -240,6 +270,36 @@ class PurchaseRequest extends AbstractRequest {
         ];
 
         return $data;
+    }
+
+
+    /**
+     * @param array $parameters
+     *
+     * @return Address
+     */
+    public function makeBillingAddress(array $parameters = [])
+    {
+        $info = new Collection($parameters);
+
+        $address = new Address();
+
+        $address->type           = $info->get('type'); // person or company
+        $address->firstName      = $info->get('firstName');
+        $address->lastName       = $info->get('lastName');
+        $address->fiscalNumber   = $info->get('fiscalNumber');
+        $address->identityNumber = $info->get('identityNumber');
+        $address->country        = $info->get('country');
+        $address->county         = $info->get('county');
+        $address->city           = $info->get('city');
+        $address->zipCode        = $info->get('zipCode');
+        $address->address        = $info->get('address');
+        $address->email          = $info->get('email');
+        $address->mobilePhone    = $info->get('mobilePhone');
+        $address->bank           = $info->get('bank');
+        $address->iban           = $info->get('iban');
+
+        return $address;
     }
 
     /**

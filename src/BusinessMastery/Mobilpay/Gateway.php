@@ -95,8 +95,8 @@ class Gateway extends AbstractGateway {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getRecurrence()
     {
@@ -113,8 +113,8 @@ class Gateway extends AbstractGateway {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getPaymentNo()
     {
@@ -131,8 +131,8 @@ class Gateway extends AbstractGateway {
     }
 
     /**
-     * @param string $value
      * @return mixed
+     * @internal param string $value
      */
     public function getIntervalDay()
     {
@@ -146,6 +146,26 @@ class Gateway extends AbstractGateway {
     public function setIntervalDay($value)
     {
         return $this->setParameter('intervalDay', $value);
+    }
+
+    /**
+     * @return mixed
+     * @internal param string $value
+     */
+    public function getBillingAddress()
+    {
+        return $this->getParameter('billingAddress');
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return mixed
+     * @internal param string $value
+     */
+    public function setBillingAddress(array $parameters = [])
+    {
+        return $this->setParameter('billingAddress', $parameters);
     }
 
     /**
