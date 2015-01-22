@@ -8,7 +8,6 @@ use Omnipay\MobilPay\Api\Request\Card;
 use Omnipay\MobilPay\Api\Invoice;
 use Omnipay\MobilPay\Api\Address;
 use Omnipay\MobilPay\Api\Recurrence;
-use Illuminate\Support\Collection;
 
 /**
  * MobilPay Purchase Request
@@ -213,7 +212,7 @@ class PurchaseRequest extends AbstractRequest {
      */
     public function setBillingAddress($value)
     {
-        return $this->setParameter('billingAddress', $value);
+        $this->setParameter('billingAddress', $value);
     }
 
     /**
@@ -280,24 +279,22 @@ class PurchaseRequest extends AbstractRequest {
      */
     public function makeBillingAddress(array $parameters = [])
     {
-        $info = new Collection($parameters);
-
         $address = new Address();
 
-        $address->type           = $info->get('type'); // person or company
-        $address->firstName      = $info->get('firstName');
-        $address->lastName       = $info->get('lastName');
-        $address->fiscalNumber   = $info->get('fiscalNumber');
-        $address->identityNumber = $info->get('identityNumber');
-        $address->country        = $info->get('country');
-        $address->county         = $info->get('county');
-        $address->city           = $info->get('city');
-        $address->zipCode        = $info->get('zipCode');
-        $address->address        = $info->get('address');
-        $address->email          = $info->get('email');
-        $address->mobilePhone    = $info->get('mobilePhone');
-        $address->bank           = $info->get('bank');
-        $address->iban           = $info->get('iban');
+        $address->type           = $parameters['type']; // person or company
+        $address->firstName      = $parameters['firstName'];
+        $address->lastName       = $parameters['lastName'];
+        $address->fiscalNumber   = $parameters['fiscalNumber'];
+        $address->identityNumber = $parameters['identityNumber'];
+        $address->country        = $parameters['country'];
+        $address->county         = $parameters['county'];
+        $address->city           = $parameters['city'];
+        $address->zipCode        = $parameters['zipCode'];
+        $address->address        = $parameters['address'];
+        $address->email          = $parameters['email'];
+        $address->mobilePhone    = $parameters['mobilePhone'];
+        $address->bank           = $parameters['bank'];
+        $address->iban           = $parameters['iban'];
 
         return $address;
     }

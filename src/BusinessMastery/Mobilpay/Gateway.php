@@ -165,7 +165,7 @@ class Gateway extends AbstractGateway {
      */
     public function setBillingAddress(array $parameters = [])
     {
-        return $this->setParameter('billingAddress', $parameters);
+        $this->setParameter('billingAddress', $parameters);
     }
 
     /**
