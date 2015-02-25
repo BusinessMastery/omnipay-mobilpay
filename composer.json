@@ -1,5 +1,5 @@
 {
-    "name": "business-mastery/omnipay-mobilpay",
+    "name": "lrauldan/omnipay-mobilpay",
     "description": "MobilPay driver for the Omnipay PHP payment processing library",
     "keywords": [
         "mobilpay",

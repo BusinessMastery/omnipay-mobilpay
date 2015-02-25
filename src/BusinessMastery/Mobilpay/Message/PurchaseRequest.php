@@ -8,6 +8,7 @@ use Omnipay\MobilPay\Api\Request\Card;
 use Omnipay\MobilPay\Api\Invoice;
 use Omnipay\MobilPay\Api\Address;
 use Omnipay\MobilPay\Api\Recurrence;
+use Omnipay\MobilPay\Api\Address;
 
 /**
  * MobilPay Purchase Request
@@ -253,6 +254,22 @@ class PurchaseRequest extends AbstractRequest {
         $request->invoice->currency = $this->getParameter('currency');
         $request->invoice->amount   = $this->getParameter('amount');
         $request->invoice->details  = $this->getParameter('details');
+        
+        if($this->getParameter('billingAddress')) {
+        	$addressData =  $this->getParameter('billingAddress');
+        	$billingAddress = new Address();
+        	
+        	foreach($addressData as $key => $value) {
+        		$billingAddress->$key = $value;
+        	}
+        	
+        	$request->invoice->setBillingAddress($billingAddress);
+        	$request->invoice->setShippingAddress($billingAddress);
+        }
+        
+        if(!$request->service) {
+        	unset($request->service);
+        } 
 
 
         $getBillingAddress = $this->getBillingAddress();
@@ -262,7 +279,7 @@ class PurchaseRequest extends AbstractRequest {
         }
 
         $request->encrypt($this->getParameter('publicKey'));
-
+        
         $data = [
             'env_key' => $request->getEnvKey(),
             'data'    => $request->getEncData()
@@ -314,5 +331,21 @@ class PurchaseRequest extends AbstractRequest {
     public function sendData($data)
     {
         return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint());
+    }
+    
+    /**
+     * @param unknown $address
+     */
+    public function setBillingAddress($address)
+    {
+    	return $this->setParameter('billingAddress', $address);
+    }
+    
+    /**
+     *
+     */
+    public function getBillingAddress()
+    {
+    	return $this->getParameter('billingAddress');
     }
 }
