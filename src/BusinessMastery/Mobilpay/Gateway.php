@@ -1,4 +1,6 @@
-<?php namespace Omnipay\MobilPay;
+<?php
+
+namespace Omnipay\MobilPay;
 
 use Omnipay\MobilPay\Message\CompletePurchaseRequest;
 use Omnipay\MobilPay\Message\PurchaseRequest;
@@ -9,8 +11,8 @@ use Omnipay\Common\AbstractGateway;
  *
  * @link http://www.mobilpay.ro
  */
-class Gateway extends AbstractGateway {
-
+class Gateway extends AbstractGateway
+{
     /**
      * @return string
      */
