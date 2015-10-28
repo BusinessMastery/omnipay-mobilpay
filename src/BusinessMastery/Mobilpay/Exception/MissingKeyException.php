@@ -1,3 +1,5 @@
-<?php namespace Omnipay\MobilPay\Exception;
+<?php
+
+namespace Omnipay\MobilPay\Exception;
 
 class MissingKeyException extends \Exception{}
