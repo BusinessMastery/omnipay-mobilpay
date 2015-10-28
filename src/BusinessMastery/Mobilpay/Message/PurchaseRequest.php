@@ -4,12 +4,12 @@ namespace Omnipay\MobilPay\Message;
 
 use DOMDocument;
 use SimpleXMLElement;
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\MobilPay\Exception\MissingKeyException;
-use Omnipay\MobilPay\Api\Request\Card;
 use Omnipay\MobilPay\Api\Invoice;
 use Omnipay\MobilPay\Api\Address;
 use Omnipay\MobilPay\Api\Recurrence;
+use Omnipay\MobilPay\Api\Request\Card;
+use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\MobilPay\Exception\MissingKeyException;
 
 /**
  * MobilPay Purchase Request
@@ -35,7 +35,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setMerchantId($value)
@@ -52,7 +52,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPublicKey($value)
@@ -69,7 +69,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setOrderId($value)
@@ -86,7 +86,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setReturnUrl($value)
@@ -103,7 +103,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setConfirmUrl($value)
@@ -120,7 +120,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setParams($value)
@@ -137,7 +137,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setDetails($value)
@@ -147,7 +147,6 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getRecurrence()
     {
@@ -155,7 +154,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setRecurrence($value)
@@ -165,7 +164,6 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getPaymentNo()
     {
@@ -173,7 +171,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPaymentNo($value)
@@ -183,7 +181,6 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getIntervalDay()
     {
@@ -191,7 +188,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setIntervalDay($value)
@@ -201,7 +198,6 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getBillingAddress()
     {
@@ -209,7 +205,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setBillingAddress($value)
@@ -305,7 +301,7 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param array $data
+     * @param  array $data
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
     public function sendData($data)

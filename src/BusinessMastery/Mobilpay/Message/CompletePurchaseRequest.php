@@ -12,7 +12,12 @@ use Omnipay\MobilPay\Exception\MissingKeyException;
 class CompletePurchaseRequest extends PurchaseRequest
 {
     /**
-     * @param string $value
+     * @var stdClass
+     */
+    private $responseError;
+
+    /**
+     * @param  string $value
      * @return mixed
      */
     public function getPrivateKey()
@@ -21,7 +26,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPrivateKey($value)
@@ -30,7 +35,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function getIpnData()
@@ -39,7 +44,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setData($value)
@@ -48,7 +53,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function getIpnEnvKey()
@@ -57,18 +62,13 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setEnvKey($value)
     {
         return $this->setParameter('ipn_env_key', $value);
     }
-
-    /**
-     * @var stdClass
-     */
-    private $responseError;
 
     /**
      * Process IPN request data
@@ -130,7 +130,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     /**
      * Build IPN response message
      *
-     * @param array $data
+     * @param  array $data
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
     public function sendData($data)

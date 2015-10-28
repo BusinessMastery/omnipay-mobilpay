@@ -2,9 +2,9 @@
 
 namespace Omnipay\MobilPay;
 
-use Omnipay\MobilPay\Message\CompletePurchaseRequest;
-use Omnipay\MobilPay\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
+use Omnipay\MobilPay\Message\PurchaseRequest;
+use Omnipay\MobilPay\Message\CompletePurchaseRequest;
 
 /**
  * MobilPay Gateway
@@ -43,7 +43,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setMerchantId($value)
@@ -52,7 +52,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPublicKey($value)
@@ -61,7 +61,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPrivateKey($value)
@@ -70,7 +70,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setCurrency($value)
@@ -79,7 +79,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setReturnUrl($value)
@@ -88,7 +88,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setConfirmUrl($value)
@@ -97,8 +97,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @return mixed
-     * @internal param string $value
+     * @return  mixed
      */
     public function getRecurrence()
     {
@@ -106,7 +105,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setRecurrence($value)
@@ -116,7 +115,6 @@ class Gateway extends AbstractGateway
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getPaymentNo()
     {
@@ -124,7 +122,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setPaymentNo($value)
@@ -134,7 +132,6 @@ class Gateway extends AbstractGateway
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getIntervalDay()
     {
@@ -142,7 +139,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $value
+     * @param  string $value
      * @return mixed
      */
     public function setIntervalDay($value)
@@ -152,7 +149,6 @@ class Gateway extends AbstractGateway
 
     /**
      * @return mixed
-     * @internal param string $value
      */
     public function getBillingAddress()
     {
@@ -160,10 +156,8 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
-     *
+     * @param  array $parameters
      * @return mixed
-     * @internal param string $value
      */
     public function setBillingAddress(array $parameters = [])
     {
@@ -171,7 +165,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array $parameters
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
     public function purchase(array $parameters = [])
@@ -180,7 +174,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array $parameters
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
     public function completePurchase(array $parameters = [])
