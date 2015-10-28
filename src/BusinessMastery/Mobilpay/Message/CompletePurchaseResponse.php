@@ -13,7 +13,7 @@ class CompletePurchaseResponse extends AbstractResponse
     /**
      * @var string
      */
-    protected $status;
+    protected $action;
 
     /**
      * @var stdClass
@@ -23,12 +23,12 @@ class CompletePurchaseResponse extends AbstractResponse
     /**
      * @var string
      */
-    protected $action;
+    protected $status;
 
     /**
-     * @param Omnipay\Common\Message\RequestInterface $request
-     * @param array $data
-     * @param stdClass $responseError
+     * @param  Omnipay\Common\Message\RequestInterface $request
+     * @param  array $data
+     * @param  stdClass $responseError
      * @return void
      */
     public function __construct(RequestInterface $request, $data, $responseError)
