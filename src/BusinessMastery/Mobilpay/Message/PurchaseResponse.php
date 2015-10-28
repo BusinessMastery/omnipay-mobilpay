@@ -1,4 +1,6 @@
-<?php namespace Omnipay\MobilPay\Message;
+<?php
+
+namespace Omnipay\MobilPay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
@@ -7,8 +9,8 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 /**
  * MobilPay Purchase Response
  */
-class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface {
-
+class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
+{
     /**
      * @var string
      */

@@ -1,4 +1,6 @@
-<?php namespace Omnipay\MobilPay\Message;
+<?php
+
+namespace Omnipay\MobilPay\Message;
 
 use DOMDocument;
 use SimpleXMLElement;
@@ -12,8 +14,8 @@ use Omnipay\MobilPay\Api\Recurrence;
 /**
  * MobilPay Purchase Request
  */
-class PurchaseRequest extends AbstractRequest {
-
+class PurchaseRequest extends AbstractRequest
+{
     /**
      * @var string
      */
@@ -230,8 +232,7 @@ class PurchaseRequest extends AbstractRequest {
         $envKey = $envData = null;
         $publicKey = $this->getParameter('publicKey');
 
-        if ( ! $publicKey)
-        {
+        if (! $publicKey) {
             throw new MissingKeyException("Missing public key path parameter");
         }
 
@@ -242,8 +243,7 @@ class PurchaseRequest extends AbstractRequest {
         $request->returnUrl  = $this->getParameter('returnUrl');
         $request->params     = $this->getParameter('params') ?: [];
 
-        if ($this->getParameter('recurrence'))
-        {
+        if ($this->getParameter('recurrence')) {
             $request->recurrence = new Recurrence();
             $request->recurrence->payments_no = $this->getParameter('paymentNo');
             $request->recurrence->interval_day = $this->getParameter('intervalDay');
@@ -254,11 +254,8 @@ class PurchaseRequest extends AbstractRequest {
         $request->invoice->amount   = $this->getParameter('amount');
         $request->invoice->details  = $this->getParameter('details');
 
-
-        $getBillingAddress = $this->getBillingAddress();
-        if ($getBillingAddress)
-        {
-            $request->invoice->setBillingAddress( $this->makeBillingAddress($getBillingAddress) );
+        if ($getBillingAddress = $this->getBillingAddress()) {
+            $request->invoice->setBillingAddress($this->makeBillingAddress($getBillingAddress));
         }
 
         $request->encrypt($this->getParameter('publicKey'));

@@ -1,14 +1,16 @@
-<?php namespace Omnipay\MobilPay\Message;
+<?php
 
+namespace Omnipay\MobilPay\Message;
+
+use stdClass;
 use Omnipay\MobilPay\Api\Request\AbstractRequest;
 use Omnipay\MobilPay\Exception\MissingKeyException;
-use stdClass;
 
 /**
  * MobilPay Complete Purchase Request
  */
-class CompletePurchaseRequest extends PurchaseRequest {
-
+class CompletePurchaseRequest extends PurchaseRequest
+{
     /**
      * @param string $value
      * @return mixed
@@ -75,8 +77,7 @@ class CompletePurchaseRequest extends PurchaseRequest {
      */
     public function getData()
     {
-        if ( ! $this->getPrivateKey())
-        {
+        if (! $this->getPrivateKey()) {
             throw new MissingKeyException("Missing private key path parameter");
         }
 
@@ -87,10 +88,8 @@ class CompletePurchaseRequest extends PurchaseRequest {
         $this->responseError->type    = AbstractRequest::CONFIRM_ERROR_TYPE_NONE;
         $this->responseError->message = '';
 
-        if ($this->getIpnEnvKey() && $this->getIpnData())
-        {
-            try
-            {
+        if ($this->getIpnEnvKey() && $this->getIpnData()) {
+            try {
                 $data = AbstractRequest::factoryFromEncrypted(
                     $this->getIpnEnvKey(),
                     $this->getIpnData(),
@@ -102,30 +101,24 @@ class CompletePurchaseRequest extends PurchaseRequest {
                 $data = json_decode(json_encode($data), true);
 
                 // extract the transaction status from the IPN message
-                if (isset($data['objPmNotify']['action']))
-                {
+                if (isset($data['objPmNotify']['action'])) {
                     $this->action = $data['objPmNotify']['action'];
                 }
 
-                if ( ! in_array(
+                if (! in_array(
                     $this->action,
                     ['confirmed_pending', 'paid_pending', 'paid', 'confirmed', 'canceled', 'credit']
-                ))
-                {
+                )) {
                     $this->responseError->type    = AbstractRequest::CONFIRM_ERROR_TYPE_PERMANENT;
                     $this->responseError->code    = AbstractRequest::ERROR_CONFIRM_INVALID_ACTION;
                     $this->responseError->message = 'mobilpay_refference_action paramaters is invalid';
                 }
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 $this->responseError->type    = AbstractRequest::CONFIRM_ERROR_TYPE_TEMPORARY;
                 $this->responseError->code    = $e->getCode();
                 $this->responseError->message = $e->getMessage();
             }
-        }
-        else
-        {
+        } else {
             $this->responseError->type    = AbstractRequest::CONFIRM_ERROR_TYPE_PERMANENT;
             $this->responseError->code    = AbstractRequest::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
             $this->responseError->message = 'mobilpay.ro posted invalid parameters';

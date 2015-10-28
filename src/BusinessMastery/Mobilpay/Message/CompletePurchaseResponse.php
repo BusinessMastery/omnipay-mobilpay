@@ -1,4 +1,6 @@
-<?php namespace Omnipay\MobilPay\Message;
+<?php
+
+namespace Omnipay\MobilPay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
@@ -6,8 +8,8 @@ use Omnipay\Common\Message\RequestInterface;
 /**
  * MobilPay Complete Purchase Response
  */
-class CompletePurchaseResponse extends AbstractResponse {
-
+class CompletePurchaseResponse extends AbstractResponse
+{
     /**
      * @var string
      */
@@ -36,8 +38,7 @@ class CompletePurchaseResponse extends AbstractResponse {
         $this->request       = $request;
         $this->responseError = $responseError;
 
-        if (isset($data['objPmNotify']['action']))
-        {
+        if (isset($data['objPmNotify']['action'])) {
             $this->action = $data['objPmNotify']['action'];
         }
     }
@@ -87,12 +88,10 @@ class CompletePurchaseResponse extends AbstractResponse {
     {
         header('Content-type: application/xml');
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-        if($this->responseError->code == 0)
-        {
+
+        if ($this->responseError->code == 0) {
             echo "<crc>{$this->responseError->message}</crc>";
-        }
-        else
-        {
+        } else {
             echo "<crc error_type=\"{$this->responseError->type}\" error_code=\"{$this->responseError->code}\">{$this->responseError->message}</crc>";
         }
     }
