@@ -29,6 +29,8 @@ class Notify
     public $current_payment_count   = 1;
     public $customer                = null;
     public $issuer                  = null;
+    public $token_id = null;
+    public $token_expiration_date = null;
 
     private $_crc = null;
 
