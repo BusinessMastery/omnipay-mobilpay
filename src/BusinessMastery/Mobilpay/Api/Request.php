@@ -37,7 +37,7 @@ namespace Omnipay\MobilPay\Api;
      *
      * @var string(64)
      */
-    public $m_type           =s self::PAYMENT_TYPE_SMS;
+    public $m_type           = self::PAYMENT_TYPE_SMS;
     public $m_details        = null;
     public $m_price          = null;
     public $m_currency       = null;
