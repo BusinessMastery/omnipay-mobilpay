@@ -24,7 +24,7 @@ class PurchaseRequest extends AbstractRequest
     /**
      * @var string
      */
-    protected $testEndpoint = 'http://sandboxsecure.mobilpay.ro';
+    protected $testEndpoint = 'https://sandboxsecure.mobilpay.ro';
 
     /**
      * @return string
