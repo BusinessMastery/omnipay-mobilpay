@@ -29,6 +29,8 @@ class Notify
     public $current_payment_count   = 1;
     public $customer                = null;
     public $issuer                  = null;
+    public $token_id = null;
+    public $token_expiration_date = null;
 
     private $_crc = null;
 
@@ -84,6 +86,15 @@ class Notify
         if ($elems->length == 1) {
             $this->current_payment_count = $elems->item(0)->nodeValue;
         }
+        
+        $elems = $elem->getElementsByTagName('token_id');
+        if ($elems->length == 1) {
+            $this->token_id = $elems->item(0)->nodeValue;
+        }
+        $elems = $elem->getElementsByTagName('token_expiration_date');
+        if ($elems->length == 1) {
+            $this->token_expiration_date = $elems->item(0)->nodeValue;
+        }
 
         $elems = $elem->getElementsByTagName('error');
         if ($elems->length == 1) {
@@ -112,6 +123,20 @@ class Notify
         $this->originalAmount = isset($reqParams['mobilpay_refference_original_amount']) ? $reqParams['mobilpay_refference_original_amount'] : null;
         $this->processedAmount = isset($reqParams['mobilpay_refference_processed_amount']) ? $reqParams['mobilpay_refference_processed_amount'] : null;
         $this->current_payment_count = isset($reqParams['mobilpay_refference_current_payment_count']) ? $reqParams['mobilpay_refference_current_payment_count'] : null;
+        $this->errorCode = isset($reqParams['mobilpay_refference_error_code']) ? $reqParams['mobilpay_refference_error_code'] : null;
+        $this->errorMessage = isset($reqParams['mobilpay_refference_error_message']) ? $reqParams['mobilpay_refference_error_message'] : null;
+        $this->timestamp = isset($reqParams['mobilpay_refference_timestamp']) ? $reqParams['mobilpay_refference_timestamp'] : null;
+        $this->purchaseId = isset($reqParams['mobilpay_refference_id']) ? $reqParams['mobilpay_refference_id'] : null;
+        $this->action = isset($reqParams['mobilpay_refference_action']) ? $reqParams['mobilpay_refference_action'] : null;
+        $this->originalAmount = isset($reqParams['mobilpay_refference_original_amount']) ? $reqParams['mobilpay_refference_original_amount'] : null;
+        $this->processedAmount = isset($reqParams['mobilpay_refference_processed_amount']) ? $reqParams['mobilpay_refference_processed_amount'] : null;
+        $this->promotionAmount = isset($reqParams['mobilpay_refference_promotion_amount']) ? $reqParams['mobilpay_refference_promotion_amount'] : null;
+        $this->current_payment_count = isset($reqParams['mobilpay_refference_current_payment_count']) ? $reqParams['mobilpay_refference_current_payment_count'] : null;
+        $this->pan_masked = isset($reqParams['mobilpay_refference_pan_masked']) ? $reqParams['mobilpay_refference_pan_masked'] : null;
+        $this->token_id = isset($reqParams['mobilpay_refference_token_id']) ? $reqParams['mobilpay_refference_token_id'] : null;
+        $this->token_expiration_date = isset($reqParams['mobilpay_refference_token_expiration_date']) ? $reqParams['mobilpay_refference_token_expiration_date'] : null;
+        $this->customer_id = isset($reqParams['mobilpay_refference_customer_id']) ? $reqParams['mobilpay_refference_customer_id'] : null;
+        $this->customer_type = isset($reqParams['mobilpay_refference_customer_type']) ? $reqParams['mobilpay_refference_customer_type'] : null;
         $this->errorCode = isset($reqParams['mobilpay_refference_error_code']) ? $reqParams['mobilpay_refference_error_code'] : null;
         $this->errorMessage = isset($reqParams['mobilpay_refference_error_message']) ? $reqParams['mobilpay_refference_error_message'] : null;
         $this->timestamp = isset($reqParams['mobilpay_refference_timestamp']) ? $reqParams['mobilpay_refference_timestamp'] : null;
